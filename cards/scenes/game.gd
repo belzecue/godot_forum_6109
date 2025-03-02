@@ -3,26 +3,36 @@ extends Node2D
 
 @export var rotation_delay: float = 0.5;
 var tweens: Array[Tween] = []
+var is_tweening: bool = false
 signal all_tweens_finished
 
 
 func _ready() -> void:
 	# Hook up to the 'all tweens finished' signal
 	all_tweens_finished.connect(on_all_tweens_finished)
-	pause()
-
-
-func pause() -> void:
-	# 2 second delay before tweening begins
-	await get_tree().create_timer(2.0).timeout
 	tween_cards()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.keycode == KEY_ENTER:
+			if not is_tweening:
+				tween_cards()
+
+
 func tween_cards() -> void:
+	if is_tweening:
+		return
+	else:
+		is_tweening = true
+	# 1 second delay before tweening begins
+	await get_tree().create_timer(1.0).timeout
 	var accumulated_rotation_delay: float = 0.0;
 	# All cards tween at once, with different start time offsets
 	for i in get_children():
 		i = i as Card
+		# Reset card rotation to zero
+		i.rotation = 0
 		accumulated_rotation_delay += rotation_delay
 		# Start tweening for this card
 		var tween: Tween = i.start_tween(accumulated_rotation_delay)
@@ -41,10 +51,11 @@ func check_all_tweens_finished() -> bool:
 			return false
 	# No running tweens.  We're done overall.
 	tweens = []
+	is_tweening = false
 	# Announce we have finished.
 	all_tweens_finished.emit()
 	return true
 
 
 func on_all_tweens_finished() -> void:
-	print("All tweens finished!!")
+	print("All tweens finished! Press ENTER to repeat.")
