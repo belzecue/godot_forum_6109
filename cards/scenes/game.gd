@@ -3,7 +3,7 @@ extends Node2D
 const keys: Array[int] = [KEY_ENTER, KEY_KP_ENTER]
 
 
-@export var rotation_delay: float = 0.5;
+@export var initial_delay: float = 0.5;
 var tweens: Array[Tween] = []
 var is_tweening: bool = false
 signal all_tweens_finished
@@ -28,19 +28,19 @@ func tween_cards() -> void:
 	else:
 		is_tweening = true
 	# 1 second delay before tweening begins
-	await get_tree().create_timer(1.0).timeout
-	var accumulated_rotation_delay: float = 0.0;
+	#await get_tree().create_timer(1.0).timeout
+	var accumulated_start_delay: float = 0.0;
 	# All cards tween at once, with different start time offsets
 	for i in get_children():
 		i = i as Card
-		accumulated_rotation_delay += rotation_delay
+		accumulated_start_delay += initial_delay
 		# Start tweening for this card
-		var tween: Tween = i.start_tween(accumulated_rotation_delay)
+		var tween: Tween = i.start_tween(accumulated_start_delay)
 		print(str(tween.get_instance_id(), " started"))
 		# Add this tween to the list
 		tweens.push_back(tween)
 		# Tween will report it has finished to the check_all_tweens_finished function
-		tween.finished.connect(check_all_tweens_finished, CONNECT_ONE_SHOT)
+		tween.finished.connect(check_all_tweens_finished, Tween.CONNECT_ONE_SHOT)
 
 
 func check_all_tweens_finished() -> bool:

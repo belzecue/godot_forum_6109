@@ -5,19 +5,21 @@
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_5rg8f")
+initial_delay = 1.0
 
 [node name="Card" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(128, 152)
-ease_type = 2
-rotation_factor = -25.0
-rotation_duration = 2.0
+trans_type = 0
+rotation_target = -15.0
+rotation_duration = 1.0
 
 [node name="Card2" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(320, 152)
-rotation_factor = 20.0
-rotation_duration = 1.0
+trans_type = 0
+rotation_target = 12.0
 
 [node name="Card3" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(512, 152)
-rotation_factor = -5.0
-rotation_duration = 0.5
+trans_type = 0
+rotation_target = 25.0
+rotation_duration = 2.5
