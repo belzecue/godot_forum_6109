@@ -8,18 +8,16 @@ script = ExtResource("1_5rg8f")
 
 [node name="Card" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(128, 152)
-trans_type = 5
 ease_type = 2
-rotation_factor = 25.0
-rotation_duration = 1.0
+rotation_factor = -25.0
+rotation_duration = 2.0
 
 [node name="Card2" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(320, 152)
-trans_type = 7
 rotation_factor = 20.0
-rotation_duration = 0.5
+rotation_duration = 1.0
 
 [node name="Card3" parent="." instance=ExtResource("1_drykq")]
 position = Vector2(512, 152)
 rotation_factor = -5.0
-rotation_duration = 0.25
+rotation_duration = 0.5

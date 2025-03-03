@@ -38,17 +38,17 @@ func start_tween(delay: float) -> Tween:
 
 	# First, reset cards to orig rotation/scale
 	# By default, tweens run in parallel, so no 'set_parallel' needed here
-	tween.tween_property(self, "rotation_degrees", rotation_orig, reset_duration)
-	tween.tween_property(self, "scale", scale_orig, reset_duration)
+	tween.tween_property(self, "rotation_degrees", rotation_orig, reset_duration) # TWEEN 1
+	tween.tween_property(self, "scale", scale_orig, reset_duration) # TWEEN 2
+	# Tween 1 & 2 now running in parallel.
 
-	# We want to wait for all above 'reset' tweening to finish before continuing, so we switch to 'chaining' mode
-	tween.chain()
-	# Next, tween rotation and scale in parallel
-	tween.tween_property(self, "rotation_degrees", rotation_factor, rotation_duration)
-	tween.set_parallel()
-	tween.tween_method(tween_scale, 0.0, scale_factor, rotation_duration)
+	# Next, tween rotation and scale in parallel AFTER Tweens 1 & 2 finish in parallel.
+	# Wait for all above 'reset' tweening to finish before continuing,
+	# so we must switch to 'chaining' mode, or the tweens below would run parallel with Tweens 1 & 2.
+	tween.chain().tween_property(self, "rotation_degrees", rotation_factor, rotation_duration) # TWEEN 3
+	tween.set_parallel().tween_method(tween_scale, 0.0, scale_factor, rotation_duration) # TWEEN 4
 	return tween
 
 
 func tween_scale(value: float) -> void:
-	scale = scale_orig + Vector2.ONE * sin((value/scale_factor) * PI2 * 0.5) * scale_amount
+	scale = scale_orig + Vector2.ONE * sin((value/scale_factor) * PI2 * 1.0) * scale_amount
