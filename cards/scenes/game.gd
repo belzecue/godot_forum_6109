@@ -27,15 +27,12 @@ func tween_cards() -> void:
 		return
 	else:
 		is_tweening = true
-	# 1 second delay before tweening begins
-	#await get_tree().create_timer(1.0).timeout
-	var accumulated_start_delay: float = 0.0;
+
 	# All cards tween at once, with different start time offsets
 	for i in get_children():
 		i = i as Card
-		accumulated_start_delay += initial_delay
 		# Start tweening for this card
-		var tween: Tween = i.start_tween(accumulated_start_delay)
+		var tween: Tween = i.start_tween()
 		print(str(tween.get_instance_id(), " started"))
 		# Add this tween to the list
 		tweens.push_back(tween)
