@@ -31,8 +31,6 @@ func tween_cards() -> void:
 	# All cards tween at once, with different start time offsets
 	for i in get_children():
 		i = i as Card
-		# Reset card rotation to zero
-		i.rotation = 0
 		accumulated_rotation_delay += rotation_delay
 		# Start tweening for this card
 		var tween: Tween = i.start_tween(accumulated_rotation_delay)
