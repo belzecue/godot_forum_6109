@@ -1,5 +1,7 @@
 extends Node2D
 
+const keys: Array[int] = [KEY_ENTER, KEY_KP_ENTER]
+
 
 @export var rotation_delay: float = 0.5;
 var tweens: Array[Tween] = []
@@ -15,7 +17,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.keycode == KEY_ENTER:
+		if event.keycode in keys:
 			if not is_tweening:
 				tween_cards()
 
